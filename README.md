@@ -9,7 +9,7 @@ As configurações estão localizadas na pasta WEB
 <root>
         <!-- Configurações do Launcher -->
 	<config>
-		<!-- Link para aa página principal do launcher -->
+		<!-- Link para a página principal do launcher -->
 		<notic>http://localhost/Updates/html/index.html</notic>
 		<!-- Caso esteja 1 irá fazer o download novamente do ultimo patch sempre que abrir o jogo -->
 		<downloadlastupdate>0</downloadlastupdate>
