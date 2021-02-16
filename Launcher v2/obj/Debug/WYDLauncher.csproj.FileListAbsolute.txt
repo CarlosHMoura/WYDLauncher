@@ -1,0 +1,14 @@
+C:\Users\djuni\Desktop\Launcher\VS Project\Launcher v2\bin\Debug\WYDLauncher.exe.manifest
+C:\Users\djuni\Desktop\Launcher\VS Project\Launcher v2\bin\Debug\WYDLauncher.application
+C:\Users\djuni\Desktop\Launcher\VS Project\Launcher v2\bin\Debug\WYDLauncher.exe
+C:\Users\djuni\Desktop\Launcher\VS Project\Launcher v2\bin\Debug\WYDLauncher.pdb
+C:\Users\djuni\Desktop\Launcher\VS Project\Launcher v2\bin\Debug\Ionic.Zip.dll
+C:\Users\djuni\Desktop\Launcher\VS Project\Launcher v2\obj\Debug\WYDLauncher.Window.resources
+C:\Users\djuni\Desktop\Launcher\VS Project\Launcher v2\obj\Debug\WYDLauncher.Properties.Resources.resources
+C:\Users\djuni\Desktop\Launcher\VS Project\Launcher v2\obj\Debug\WYDLauncher.csproj.GenerateResource.cache
+C:\Users\djuni\Desktop\Launcher\VS Project\Launcher v2\obj\Debug\WYDLauncher.csproj.CoreCompileInputs.cache
+C:\Users\djuni\Desktop\Launcher\VS Project\Launcher v2\obj\Debug\WYDLauncher.exe.manifest
+C:\Users\djuni\Desktop\Launcher\VS Project\Launcher v2\obj\Debug\WYDLauncher.application
+C:\Users\djuni\Desktop\Launcher\VS Project\Launcher v2\obj\Debug\WYDLauncher.csproj.CopyComplete
+C:\Users\djuni\Desktop\Launcher\VS Project\Launcher v2\obj\Debug\WYDLauncher.exe
+C:\Users\djuni\Desktop\Launcher\VS Project\Launcher v2\obj\Debug\WYDLauncher.pdb
