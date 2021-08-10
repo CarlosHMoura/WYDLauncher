@@ -36,6 +36,8 @@
             this.patchNotes = new System.Windows.Forms.WebBrowser();
             this.button2 = new System.Windows.Forms.Button();
             this.progressBar1 = new WYDLauncher.TextProgressBar();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // backgroundWorker1
@@ -128,12 +130,38 @@
             this.progressBar1.VisualMode = WYDLauncher.ProgressBarDisplayMode.Percentage;
             this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Transparent;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Location = new System.Drawing.Point(-2, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(83, 26);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "Versão Atual:";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.Transparent;
+            this.button3.FlatAppearance.BorderSize = 0;
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Location = new System.Drawing.Point(73, 0);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(52, 26);
+            this.button3.TabIndex = 9;
+            this.button3.Text = "0";
+            this.button3.UseVisualStyleBackColor = false;
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(900, 450);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.minimizeBtn);
             this.Controls.Add(this.closeBtn);
@@ -162,6 +190,8 @@
         private System.Windows.Forms.WebBrowser patchNotes;
         private Config Config;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button3;
     }
 }
 
