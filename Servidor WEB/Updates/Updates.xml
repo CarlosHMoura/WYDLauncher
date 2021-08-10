@@ -3,17 +3,29 @@
         <!-- Configurações do Launcher -->
 	<config>
 		<!-- Link para aa página principal do launcher -->
-		<notic>http://localhost/Updates/html/index.html</notic>
+		<notic>http://localhost/Updates/</notic>
 		<!-- Caso esteja 1 irá fazer o download novamente do ultimo patch sempre que abrir o jogo -->
-		<downloadlastupdate>0</downloadlastupdate>
+		<downloadlastupdate>1</downloadlastupdate>
 		<!-- Versão atual da atualização -->
-		<currentversion>7598</currentversion>
+		<currentversion>3</currentversion>
 	</config>
 	<theupdates>
 		<!--Atualização -->
 		<update>
 			<!-- Versão da atualização que este patch irá colocar -->
-			<version>7598</version>
+			<version>1</version>
+			<!--Arquivo de atualização -->
+			<file>Updates.zip</file>
+		</update>
+		<update>
+			<!-- Versão da atualização que este patch irá colocar -->
+			<version>2</version>
+			<!--Arquivo de atualização -->
+			<file>Updates.zip</file>
+		</update>
+		<update>
+			<!-- Versão da atualização que este patch irá colocar -->
+			<version>3</version>
 			<!--Arquivo de atualização -->
 			<file>Updates.zip</file>
 		</update>
