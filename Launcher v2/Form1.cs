@@ -136,92 +136,98 @@ namespace WYDLauncher
             }
         }
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        public void AddUpdate()
         {
             lista.Clear();
-            
+
 
             string Root = AppDomain.CurrentDomain.BaseDirectory;
-
-
             decimal localVersion = Config.m_Version;
 
             var updateList = (from p in serverXml.Descendants("update")
-                          select new
-                          {
-                              version = Convert.ToInt32(p.Element("version").Value),
-                              file = p.Element("file").Value
-                          }).ToList();
+                              select new
+                              {
+                                  version = Convert.ToInt32(p.Element("version").Value),
+                                  file = p.Element("file").Value
+                              }).ToList();
 
-            
-            foreach (var update in updateList)
+            if (Config.m_Version != CompletserverVersion)
             {
-                string version = update.version.ToString();
-                string file = update.file;
+                DialogResult confirm = MessageBox.Show("Nova versão encontrada, deseja atualizar?", "WYDLauncher", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
 
-                decimal serverVersion = decimal.Parse(version);
-
-
-                string sUrlToReadFileFrom = Server + file;
-
-                string sFilePathToWriteFileTo = Root + file;
-
-                bool normalCondition = serverVersion > localVersion;
-                if (downloadlastupdate == 1)
-                    normalCondition = serverVersion >= localVersion;
-
-                if (normalCondition)
+                if (confirm.ToString().ToUpper() == "YES")
                 {
-                    Uri url = new Uri(sUrlToReadFileFrom);
-                    HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
-                    HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
-                    response.Close();
-                    Int64 iSize = response.ContentLength;
-                    Int64 iRunningByteTotal = 0;
-
-                    using (WebClient client = new WebClient())
+                    strtGameBtn.Enabled = false;
+                    foreach (var update in updateList)
                     {
-                        using (Stream streamRemote = client.OpenRead(new Uri(sUrlToReadFileFrom)))
+                        string version = update.version.ToString();
+                        string file = update.file;
+
+                        decimal serverVersion = decimal.Parse(version);
+
+
+                        string sUrlToReadFileFrom = Server + file;
+
+                        string sFilePathToWriteFileTo = Root + file;
+
+                        bool normalCondition = serverVersion > localVersion;
+                        if (downloadlastupdate == 1)
+                            normalCondition = serverVersion >= localVersion;
+
+                        if (normalCondition)
                         {
-                            using (Stream streamLocal = new FileStream(sFilePathToWriteFileTo, FileMode.Create, FileAccess.Write, FileShare.None))
+                            Uri url = new Uri(sUrlToReadFileFrom);
+                            HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
+                            HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
+                            response.Close();
+                            Int64 iSize = response.ContentLength;
+                            Int64 iRunningByteTotal = 0;
+
+                            using (WebClient client = new WebClient())
                             {
-                                int iByteSize = 0;
-                                byte[] byteBuffer = new byte[iSize];
-                                while ((iByteSize = streamRemote.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
+                                using (Stream streamRemote = client.OpenRead(new Uri(sUrlToReadFileFrom)))
                                 {
-                                    streamLocal.Write(byteBuffer, 0, iByteSize);
-                                    iRunningByteTotal += iByteSize;
+                                    using (Stream streamLocal = new FileStream(sFilePathToWriteFileTo, FileMode.Create, FileAccess.Write, FileShare.None))
+                                    {
+                                        int iByteSize = 0;
+                                        byte[] byteBuffer = new byte[iSize];
+                                        while ((iByteSize = streamRemote.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
+                                        {
+                                            streamLocal.Write(byteBuffer, 0, iByteSize);
+                                            iRunningByteTotal += iByteSize;
 
-                                    double dIndex = (double)(iRunningByteTotal);
-                                    double dTotal = (double)byteBuffer.Length;
-                                    double dProgressPercentage = (dIndex / dTotal);
-                                    int iProgressPercentage = (int)(dProgressPercentage * 100);
+                                            double dIndex = (double)(iRunningByteTotal);
+                                            double dTotal = (double)byteBuffer.Length;
+                                            double dProgressPercentage = (dIndex / dTotal);
+                                            int iProgressPercentage = (int)(dProgressPercentage * 100);
 
-                                    backgroundWorker1.ReportProgress(iProgressPercentage);
+                                            backgroundWorker1.ReportProgress(iProgressPercentage);
+                                        }
+                                        streamLocal.Close();
+                                    }
+                                    streamRemote.Close();
                                 }
-
-                                streamLocal.Close();
-
                             }
-
-                            streamRemote.Close();
-                        }
-                    }
-
-                    lista.Add(file);
-                    using (ZipFile zip = ZipFile.Read(file))
-                    {
-                        progressBar1.Maximum = zip.Count;
-                        foreach (ZipEntry zipFiles in zip)
-                        {
-                            progressBar1.CustomText = "Extraindo arquivos... " + zipFiles.FileName;
-                            progressBar1.VisualMode = ProgressBarDisplayMode.TextAndCurrProgress;
-                            zipFiles.Extract(Root + "", true);
-                            progressBar1.Value++;
+                            lista.Add(file);
+                            using (ZipFile zip = ZipFile.Read(file))
+                            {
+                                progressBar1.Maximum = zip.Count;
+                                foreach (ZipEntry zipFiles in zip)
+                                {
+                                    progressBar1.CustomText = "Extraindo arquivos... " + zipFiles.FileName;
+                                    progressBar1.VisualMode = ProgressBarDisplayMode.TextAndCurrProgress;
+                                    zipFiles.Extract(Root + "", true);
+                                    progressBar1.Value++;
+                                }
+                            }
                         }
                     }
                 }
             }
+        }
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            AddUpdate();
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
