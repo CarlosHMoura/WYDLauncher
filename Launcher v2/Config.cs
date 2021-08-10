@@ -71,7 +71,7 @@ namespace WYDLauncher
 				radioButton2.Checked = false;
 			}
 
-			comboBox1.SelectedIndex = m_ResIndex;
+			comboBox1.SelectedIndex = m_ResIndex - 1;
 
 			Efeitos.Value = m_Sound;
 			Musica.Value = m_Music;
