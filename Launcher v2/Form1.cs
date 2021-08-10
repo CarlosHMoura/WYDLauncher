@@ -25,18 +25,27 @@ namespace WYDLauncher
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
-        public string Server =  "";
+        public string Server = "";
         private int CompletserverVersion = 0;
         private int downloadlastupdate = 0;
-        private XDocument       serverXml;
+        private XDocument serverXml;
         public Window()
         {
             InitializeComponent();
+            this.Config = new Config();
+            this.AddOwnedForm(this.Config);
+            this.Config.Hide();
             readSettings();
             backgroundWorker1.RunWorkerAsync();
             strtGameBtn.Enabled = false;
             progressBar1.ProgressColor = Color.Gray;
             progressBar1.Value = 0;
+
+            this.Config.ClientSize = new System.Drawing.Size(450, 242);
+            closeBtn.BackgroundImage = Properties.Resources.close1;
+            minimizeBtn.BackgroundImage = Properties.Resources.minimize1;
+            button2.BackgroundImage = Properties.Resources.config1;
+            strtGameBtn.Enabled = false;
         }
 
         public void readSettings()
@@ -61,16 +70,16 @@ namespace WYDLauncher
                 }
                 catch (Exception Ex)
                 {
-                    MessageBox.Show("Servidor de atualização falhou");
+                    MessageBox.Show("Servidor de atualização falhou" + Ex.Message);
                     this.Close();
                 }
             }
-            catch(Exception Ex)
+            catch (Exception Ex)
             {
-                MessageBox.Show("Não foi possível localizar o arquivo settings.txt");
+                MessageBox.Show("Não foi possível localizar o arquivo settings.txt" + Ex.Message);
                 this.Close();
             }
-           
+
         }
         private void Form1_MouseDown(object sender,
         System.Windows.Forms.MouseEventArgs e)
@@ -152,7 +161,7 @@ namespace WYDLauncher
             }
             decimal localVersion = decimal.Parse(lclVersion);
 
- 
+
 
             foreach (XElement update in serverXml.Descendants("update"))
             {
@@ -227,7 +236,7 @@ namespace WYDLauncher
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             progressBar1.Value = e.ProgressPercentage;
-            
+
             // downloadLbl.ForeColor = System.Drawing.Color.Silver;
             strtGameBtn.Enabled = false;
             progressBar1.VisualMode = ProgressBarDisplayMode.TextAndPercentage;
@@ -243,7 +252,7 @@ namespace WYDLauncher
             progressBar1.VisualMode = ProgressBarDisplayMode.CustomText;
 
             lista.ForEach(i => deleteFile(i));
-         
+
             //download new version file
             WebClient webClient = new WebClient();
 
@@ -269,7 +278,8 @@ namespace WYDLauncher
                 }
             }
 
-            progressBar1.CustomText = "Client Atualizado !";
+            progressBar1.CustomText = "Jogo Atualizado !";
+            strtGameBtn.Enabled = true;
         }
 
 
@@ -280,9 +290,9 @@ namespace WYDLauncher
             {
                 Process.Start("WYD.exe", "\\starting by launcher");
             }
-            catch(Exception ex)
+            catch (Exception Ex)
             {
-                MessageBox.Show("WYD.exe não foi encontrado");
+                MessageBox.Show("WYD.exe não foi encontrado" + Ex.Message);
             }
             this.Close();
         }
@@ -299,15 +309,42 @@ namespace WYDLauncher
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+
+        }
+
+        private void Config_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Config_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_MouseEnter(object sender, EventArgs e)
+        {
+            button2.BackgroundImage = Properties.Resources.config1;
+        }
+
+        private void button2_MouseLeave(object sender, EventArgs e)
+        {
+            button2.BackgroundImage = Properties.Resources.config2;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
             try
             {
-                Process.Start("config.exe", "\\no");
+                this.Config = new Config();
+
+                this.Config.Show();
             }
-            catch (Exception ex)
+            catch (Exception Ex)
             {
-                MessageBox.Show("config.exe não foi encontrado");
+                MessageBox.Show("Erro" + Ex.Message);
             }
-       
         }
     }
 }

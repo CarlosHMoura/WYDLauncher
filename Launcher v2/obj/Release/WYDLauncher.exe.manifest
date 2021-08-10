@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WYDLauncher.exe" size="39360">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WYDLauncher.exe" size="55232">
       <assemblyIdentity name="WYDLauncher" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>pPv3nvLnU/CtC2eLQtrvCRaYCFY=</dsig:DigestValue>
+        <dsig:DigestValue>fxRuEwVKfCAWGcHbmkVTA7lQx4w=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -82,6 +82,24 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>Pv5Eo6QGRcagurIr1IyrOGB1Lrs=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\config1.png" size="1772">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>pf4JtC6IbOGD1EOTI2X08dYlh2s=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\config2.png" size="2241">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>a6DFd6OPqpzW4wgCDnKqsuVjxD4=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

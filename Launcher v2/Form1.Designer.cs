@@ -34,7 +34,7 @@
             this.closeBtn = new System.Windows.Forms.Button();
             this.minimizeBtn = new System.Windows.Forms.Button();
             this.patchNotes = new System.Windows.Forms.WebBrowser();
-            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.progressBar1 = new WYDLauncher.TextProgressBar();
             this.SuspendLayout();
             // 
@@ -52,9 +52,9 @@
             this.strtGameBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.strtGameBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.strtGameBtn.ForeColor = System.Drawing.Color.DimGray;
-            this.strtGameBtn.Location = new System.Drawing.Point(738, 386);
+            this.strtGameBtn.Location = new System.Drawing.Point(738, 411);
             this.strtGameBtn.Name = "strtGameBtn";
-            this.strtGameBtn.Size = new System.Drawing.Size(150, 52);
+            this.strtGameBtn.Size = new System.Drawing.Size(150, 29);
             this.strtGameBtn.TabIndex = 1;
             this.strtGameBtn.Text = "JOGAR";
             this.strtGameBtn.UseVisualStyleBackColor = false;
@@ -99,33 +99,32 @@
             this.patchNotes.Url = new System.Uri("", System.UriKind.Relative);
             this.patchNotes.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.patchNotes_DocumentCompleted);
             // 
-            // button1
+            // button2
             // 
-            this.button1.BackColor = System.Drawing.Color.LightGray;
-            this.button1.FlatAppearance.BorderSize = 2;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.DimGray;
-            this.button1.Location = new System.Drawing.Point(698, 386);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(34, 29);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "✛";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button2.BackColor = System.Drawing.Color.Transparent;
+            this.button2.FlatAppearance.BorderSize = 0;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Location = new System.Drawing.Point(795, 0);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(34, 26);
+            this.button2.TabIndex = 7;
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.MouseEnter += new System.EventHandler(this.button2_MouseEnter);
+            this.button2.MouseLeave += new System.EventHandler(this.button2_MouseLeave);
             // 
             // progressBar1
             // 
             this.progressBar1.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.progressBar1.CustomText = "";
             this.progressBar1.ForeColor = System.Drawing.Color.DarkRed;
-            this.progressBar1.Location = new System.Drawing.Point(12, 421);
+            this.progressBar1.Location = new System.Drawing.Point(9, 411);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.ProgressColor = System.Drawing.Color.LightGreen;
-            this.progressBar1.Size = new System.Drawing.Size(720, 17);
+            this.progressBar1.Size = new System.Drawing.Size(720, 29);
             this.progressBar1.TabIndex = 0;
             this.progressBar1.TextColor = System.Drawing.Color.Black;
-            this.progressBar1.TextFont = new System.Drawing.Font("Times New Roman", 11F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.progressBar1.TextFont = new System.Drawing.Font("Trebuchet MS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.progressBar1.VisualMode = WYDLauncher.ProgressBarDisplayMode.Percentage;
             this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
@@ -135,7 +134,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
             this.ClientSize = new System.Drawing.Size(900, 450);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.minimizeBtn);
             this.Controls.Add(this.closeBtn);
             this.Controls.Add(this.strtGameBtn);
@@ -161,7 +160,8 @@
         private System.Windows.Forms.Button closeBtn;
         private System.Windows.Forms.Button minimizeBtn;
         private System.Windows.Forms.WebBrowser patchNotes;
-        private System.Windows.Forms.Button button1;
+        private Config Config;
+        private System.Windows.Forms.Button button2;
     }
 }
 
