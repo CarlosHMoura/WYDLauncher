@@ -46,6 +46,8 @@ namespace WYDLauncher
             minimizeBtn.BackgroundImage = Properties.Resources.minimize1;
             button2.BackgroundImage = Properties.Resources.config1;
             strtGameBtn.Enabled = false;
+
+            Config.ReadConfigFile();
         }
 
         public void readSettings()
@@ -137,36 +139,25 @@ namespace WYDLauncher
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             lista.Clear();
+            
 
             string Root = AppDomain.CurrentDomain.BaseDirectory;
 
-            FileStream fs = null;
-            if (!File.Exists("version"))
+
+            decimal localVersion = Config.m_Version;
+
+            var updateList = (from p in serverXml.Descendants("update")
+                          select new
+                          {
+                              version = Convert.ToInt32(p.Element("version").Value),
+                              file = p.Element("file").Value
+                          }).ToList();
+
+            
+            foreach (var update in updateList)
             {
-                using (fs = File.Create("version"))
-                {
-
-                }
-
-                using (StreamWriter sw = new StreamWriter("version"))
-                {
-                    sw.Write("7559");
-                }
-            }
-
-            string lclVersion;
-            using (StreamReader reader = new StreamReader("version"))
-            {
-                lclVersion = reader.ReadLine();
-            }
-            decimal localVersion = decimal.Parse(lclVersion);
-
-
-
-            foreach (XElement update in serverXml.Descendants("update"))
-            {
-                string version = update.Element("version").Value;
-                string file = update.Element("file").Value;
+                string version = update.version.ToString();
+                string file = update.file;
 
                 decimal serverVersion = decimal.Parse(version);
 
@@ -235,6 +226,7 @@ namespace WYDLauncher
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
+            progressBar1.Maximum = e.ProgressPercentage;
             progressBar1.Value = e.ProgressPercentage;
 
             // downloadLbl.ForeColor = System.Drawing.Color.Silver;
@@ -256,28 +248,8 @@ namespace WYDLauncher
             //download new version file
             WebClient webClient = new WebClient();
 
-
-            FileStream fs = null;
-            if (!File.Exists("version"))
-            {
-                using (fs = File.Create("version"))
-                {
-
-                }
-
-                using (StreamWriter sw = new StreamWriter("version"))
-                {
-                    sw.Write("7559");
-                }
-            }
-            else
-            {
-                using (StreamWriter sw = new StreamWriter("version"))
-                {
-                    sw.Write(CompletserverVersion);
-                }
-            }
-
+            Config.m_Version = (short)CompletserverVersion;
+            Config.SaveConfig();
             progressBar1.CustomText = "Jogo Atualizado !";
             strtGameBtn.Enabled = true;
         }
