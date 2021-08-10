@@ -35,9 +35,9 @@
             this.minimizeBtn = new System.Windows.Forms.Button();
             this.patchNotes = new System.Windows.Forms.WebBrowser();
             this.button2 = new System.Windows.Forms.Button();
-            this.progressBar1 = new WYDLauncher.TextProgressBar();
             this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
+            this.progressBar1 = new WYDLauncher.TextProgressBar();
             this.SuspendLayout();
             // 
             // backgroundWorker1
@@ -115,21 +115,6 @@
             this.button2.MouseEnter += new System.EventHandler(this.button2_MouseEnter);
             this.button2.MouseLeave += new System.EventHandler(this.button2_MouseLeave);
             // 
-            // progressBar1
-            // 
-            this.progressBar1.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.progressBar1.CustomText = "";
-            this.progressBar1.ForeColor = System.Drawing.Color.DarkRed;
-            this.progressBar1.Location = new System.Drawing.Point(9, 411);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.ProgressColor = System.Drawing.Color.LightGreen;
-            this.progressBar1.Size = new System.Drawing.Size(720, 29);
-            this.progressBar1.TabIndex = 0;
-            this.progressBar1.TextColor = System.Drawing.Color.Black;
-            this.progressBar1.TextFont = new System.Drawing.Font("Trebuchet MS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.progressBar1.VisualMode = WYDLauncher.ProgressBarDisplayMode.Percentage;
-            this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
-            // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.Transparent;
@@ -147,12 +132,27 @@
             this.button3.BackColor = System.Drawing.Color.Transparent;
             this.button3.FlatAppearance.BorderSize = 0;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(73, 0);
+            this.button3.Location = new System.Drawing.Point(70, 0);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(52, 26);
+            this.button3.Size = new System.Drawing.Size(38, 26);
             this.button3.TabIndex = 9;
             this.button3.Text = "0";
             this.button3.UseVisualStyleBackColor = false;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.progressBar1.CustomText = "";
+            this.progressBar1.ForeColor = System.Drawing.Color.DarkRed;
+            this.progressBar1.Location = new System.Drawing.Point(9, 411);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.ProgressColor = System.Drawing.Color.LightGreen;
+            this.progressBar1.Size = new System.Drawing.Size(720, 29);
+            this.progressBar1.TabIndex = 0;
+            this.progressBar1.TextColor = System.Drawing.Color.Black;
+            this.progressBar1.TextFont = new System.Drawing.Font("Trebuchet MS", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.progressBar1.VisualMode = WYDLauncher.ProgressBarDisplayMode.Percentage;
+            this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
             // Window
             // 
