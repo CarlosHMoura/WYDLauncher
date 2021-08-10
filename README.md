@@ -28,4 +28,4 @@ As configurações estão localizadas na pasta WEB
 </root>
 ```
 
-![Screenshot_1](https://user-images.githubusercontent.com/11374956/108014670-27c3ae80-6fed-11eb-8e4e-2f15e293dbb5.png)
+![Screenshot_3](https://user-images.githubusercontent.com/11374956/128890232-e9c5196d-9d93-42fc-b625-7417db6a01ca.png)
