@@ -252,6 +252,8 @@ namespace WYDLauncher
             Config.SaveConfig();
             progressBar1.CustomText = "Jogo Atualizado !";
             strtGameBtn.Enabled = true;
+
+            button3.Text = "" + Config.m_Version;
         }
 
 
