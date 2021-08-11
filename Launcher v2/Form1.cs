@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -29,6 +30,7 @@ namespace WYDLauncher
         private int CompletserverVersion = 0;
         private int downloadlastupdate = 0;
         private XDocument serverXml;
+        private string currentDownload;
         public Window()
         {
             InitializeComponent();
@@ -38,6 +40,7 @@ namespace WYDLauncher
             readSettings();
             backgroundWorker1.RunWorkerAsync();
             strtGameBtn.Enabled = false;
+
             progressBar1.ProgressColor = Color.Gray;
             progressBar1.Value = 0;
 
@@ -46,8 +49,7 @@ namespace WYDLauncher
             minimizeBtn.BackgroundImage = Properties.Resources.minimize1;
             button2.BackgroundImage = Properties.Resources.config1;
             strtGameBtn.Enabled = false;
-
-            Config.ReadConfigFile();
+           
         }
 
         public void readSettings()
@@ -69,6 +71,8 @@ namespace WYDLauncher
                     patchNotes.Url = new Uri(serverXml.Root.Element("config").Element("notic").Value);
                     CompletserverVersion = int.Parse(serverXml.Root.Element("config").Element("currentversion").Value);
                     downloadlastupdate = int.Parse(serverXml.Root.Element("config").Element("downloadlastupdate").Value);
+
+                    button3.Text = Config.m_Version  + " / " + CompletserverVersion;
                 }
                 catch (Exception Ex)
                 {
@@ -138,92 +142,102 @@ namespace WYDLauncher
 
         public void AddUpdate()
         {
-            lista.Clear();
-
-
+            Config.ReadConfigFile();
             string Root = AppDomain.CurrentDomain.BaseDirectory;
             decimal localVersion = Config.m_Version;
 
-            var updateList = (from p in serverXml.Descendants("update")
-                              select new
-                              {
-                                  version = Convert.ToInt32(p.Element("version").Value),
-                                  file = p.Element("file").Value
-                              }).ToList();
-
+             
             if (Config.m_Version != CompletserverVersion)
             {
-                DialogResult confirm = MessageBox.Show("Nova versão encontrada, deseja atualizar?", "WYDLauncher", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+                var updateList = (from p in serverXml.Descendants("update")
+                                  select new
+                                  {
+                                      version = Convert.ToInt32(p.Element("version").Value),
+                                      file = p.Element("file").Value
+                                  }).ToList();
 
-                if (confirm.ToString().ToUpper() == "YES")
+
+                strtGameBtn.Enabled = false;
+
+                foreach (var update in updateList)
                 {
-                    strtGameBtn.Enabled = false;
-                    foreach (var update in updateList)
+                    if (update.version <= Config.m_Version)
+                        continue;
+
+                    string version = update.version.ToString();
+                    string file = update.file;
+ 
+                    string sUrlToReadFileFrom = Server + file;
+
+                    string sFilePathToWriteFileTo = Root + file;
+
+
+
+
+                    Uri url = new Uri(sUrlToReadFileFrom);
+                    HttpWebRequest request = (HttpWebRequest)System.Net.WebRequest.Create(url);
+                    HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
+                    response.Close();
+                    Int64 iSize = response.ContentLength;
+                    Int64 iRunningByteTotal = 0;
+
+                    using (WebClient client = new WebClient())
                     {
-                        string version = update.version.ToString();
-                        string file = update.file;
-
-                        decimal serverVersion = decimal.Parse(version);
-
-
-                        string sUrlToReadFileFrom = Server + file;
-
-                        string sFilePathToWriteFileTo = Root + file;
-
-                        bool normalCondition = serverVersion > localVersion;
-                        if (downloadlastupdate == 1)
-                            normalCondition = serverVersion >= localVersion;
-
-                        if (normalCondition)
+                        using (Stream streamRemote = client.OpenRead(new Uri(sUrlToReadFileFrom)))
                         {
-                            Uri url = new Uri(sUrlToReadFileFrom);
-                            HttpWebRequest request = (System.Net.HttpWebRequest)System.Net.WebRequest.Create(url);
-                            HttpWebResponse response = (System.Net.HttpWebResponse)request.GetResponse();
-                            response.Close();
-                            Int64 iSize = response.ContentLength;
-                            Int64 iRunningByteTotal = 0;
-
-                            using (WebClient client = new WebClient())
+                            using (Stream streamLocal = new FileStream(sFilePathToWriteFileTo, FileMode.Create, FileAccess.Write, FileShare.None))
                             {
-                                using (Stream streamRemote = client.OpenRead(new Uri(sUrlToReadFileFrom)))
+                                int iByteSize = 0;
+                                byte[] byteBuffer = new byte[iSize];
+                                while ((iByteSize = streamRemote.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
                                 {
-                                    using (Stream streamLocal = new FileStream(sFilePathToWriteFileTo, FileMode.Create, FileAccess.Write, FileShare.None))
-                                    {
-                                        int iByteSize = 0;
-                                        byte[] byteBuffer = new byte[iSize];
-                                        while ((iByteSize = streamRemote.Read(byteBuffer, 0, byteBuffer.Length)) > 0)
-                                        {
-                                            streamLocal.Write(byteBuffer, 0, iByteSize);
-                                            iRunningByteTotal += iByteSize;
+                                    streamLocal.Write(byteBuffer, 0, iByteSize);
+                                    iRunningByteTotal += iByteSize;
 
-                                            double dIndex = (double)(iRunningByteTotal);
-                                            double dTotal = (double)byteBuffer.Length;
-                                            double dProgressPercentage = (dIndex / dTotal);
-                                            int iProgressPercentage = (int)(dProgressPercentage * 100);
-
-                                            backgroundWorker1.ReportProgress(iProgressPercentage);
-                                        }
-                                        streamLocal.Close();
-                                    }
-                                    streamRemote.Close();
+                                    double dIndex = (double)(iRunningByteTotal);
+                                    double dTotal = (double)byteBuffer.Length;
+                                    double dProgressPercentage = (dIndex / dTotal);
+                                    int iProgressPercentage = (int)(dProgressPercentage * 100);
+                                    backgroundWorker1.ReportProgress(iProgressPercentage,progressBar1);
+                                    currentDownload = "Fazendo download de: " + file;
                                 }
+                                streamLocal.Close();
                             }
-                            lista.Add(file);
-                            using (ZipFile zip = ZipFile.Read(file))
-                            {
-                                progressBar1.Maximum = zip.Count;
-                                foreach (ZipEntry zipFiles in zip)
-                                {
-                                    progressBar1.CustomText = "Extraindo arquivos... " + zipFiles.FileName;
-                                    progressBar1.VisualMode = ProgressBarDisplayMode.TextAndCurrProgress;
-                                    zipFiles.Extract(Root + "", true);
-                                    progressBar1.Value++;
-                                }
-                            }
+                            streamRemote.Close();
                         }
                     }
+                    if (File.Exists(file))
+                    {
+                        using (ZipFile zip = ZipFile.Read(file))
+                        {
+                            int i = 0;
+                            foreach (ZipEntry e in zip)
+                            {
+                                currentDownload ="Extraindo: " + e.FileName;
+                                double dIndex = (double)(i);
+                                double dTotal = (double)zip.Count;
+                                double dProgressPercentage = (dIndex / dTotal);
+                                int iProgressPercentage = (int)(dProgressPercentage * 100);
+                                e.Extract(AppDomain.CurrentDomain.BaseDirectory, ExtractExistingFileAction.OverwriteSilently);
+                                backgroundWorker1.ReportProgress(iProgressPercentage);
+                               
+                                i++;
+                            }
+                        }
+                        File.Delete(file);
+                        currentDownload = "";
+                    }
+
+                    CompletserverVersion = update.version;
                 }
             }
+
+            
+            Config.m_Version = (short)CompletserverVersion;
+            button3.Text = Config.m_Version + " / " + CompletserverVersion;
+            Config.SaveConfig();
+            
+            strtGameBtn.Enabled = true;
         }
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -232,13 +246,13 @@ namespace WYDLauncher
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            progressBar1.Maximum = e.ProgressPercentage;
+            progressBar1.Maximum = 100;
             progressBar1.Value = e.ProgressPercentage;
-
+             
             // downloadLbl.ForeColor = System.Drawing.Color.Silver;
             strtGameBtn.Enabled = false;
             progressBar1.VisualMode = ProgressBarDisplayMode.TextAndPercentage;
-            progressBar1.CustomText = "Baixando Atualizações";
+            progressBar1.CustomText = currentDownload;
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -249,17 +263,9 @@ namespace WYDLauncher
             // this.downloadLbl.ForeColor = System.Drawing.Color.FromArgb(0, 121, 203);
             progressBar1.VisualMode = ProgressBarDisplayMode.CustomText;
 
-            lista.ForEach(i => deleteFile(i));
-
-            //download new version file
-            WebClient webClient = new WebClient();
-
-            Config.m_Version = (short)CompletserverVersion;
-            Config.SaveConfig();
             progressBar1.CustomText = "Jogo Atualizado !";
-            strtGameBtn.Enabled = true;
 
-            button3.Text = "" + Config.m_Version;
+
         }
 
 
@@ -325,6 +331,24 @@ namespace WYDLauncher
             {
                 MessageBox.Show("Erro" + Ex.Message);
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+          
+            Config.m_Version = 0;
+            Config.SaveConfig();
+            try
+            {
+                Process.Start("WYDLauncher.exe", "\\s");
+                Config.Close();
+                this.Close();
+            }
+            catch (Exception Ex)
+            {
+                MessageBox.Show("WYDLauncher.exe não foi encontrado" + Ex.Message);
+            }
+            this.Close();
         }
     }
 }

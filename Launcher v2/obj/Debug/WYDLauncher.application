@@ -4,17 +4,17 @@
   <description asmv2:publisher="WYDLauncher" asmv2:product="WYDLauncher" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <deployment install="true" mapFileExtensions="true" />
   <compatibleFrameworks xmlns="urn:schemas-microsoft-com:clickonce.v2">
-    <framework targetVersion="4.0" profile="Full" supportedRuntime="4.0.30319" />
+    <framework targetVersion="4.7.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="WYDLauncher.exe.manifest" size="6271">
+    <dependentAssembly dependencyType="install" codebase="WYDLauncher.exe.manifest" size="7171">
       <assemblyIdentity name="WYDLauncher.exe" version="7.5.9.0" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>5hgd0wYnxt8mswjZgGBkMfRaIgY=</dsig:DigestValue>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>Syc78bToAloY/TDSnzNqET38HEZk7StUmGBq4wJHGDU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
