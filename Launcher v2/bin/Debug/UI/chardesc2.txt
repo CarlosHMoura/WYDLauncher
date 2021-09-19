@@ -1,0 +1,30 @@
+FFFFFF Conectados com a natureza, essa linhagem domina 
+FFFFFF os elementos e criaturas ao seu favor, seja 
+FFFFFF como forma de proteção, como também 
+FFFFFF para destruir adversários.
+FFFFFF 
+FFFFFF Característica: Ataque mágico a médio e longa distância.
+FFFFFF Armas recomendadas: Lanças mágicas, cajado + escudo.
+FFFFFF Recursos: Alta defesa e imunidade, magias elementais.
+FFFFFF Distribuição de pontos: Inteligência e constituição.
+FFFFFF
+FFFFFF São os mais tímidos, porém os mais resistentes. 
+FFFFFF Seu foco é manter a defensiva enquanto 
+FFFFFF suas evocações fazem o trabalho.
+FFFFFF 
+FFFFFF Característica: Ataque mágico a médio e longa distância.
+FFFFFF Armas recomendadas: Arma de arremesso com escudo.
+FFFFFF Recursos: Evocações poderosas, ótimo para caçadas.
+FFFFFF Distribuição de pontos: Constituição
+FFFFFF
+FFFFFF
+FFFFFF A natureza o ensinou a se adaptar para cada situação
+FFFFFF e com isso, essa linhagem aprendeu a se transformar
+FFFFFF em criaturas, com caracteristicas diferentes
+FFFFFF 
+FFFFFF Característica: Ataques físicos e média distância.
+FFFFFF Armas recomendadas: Martelos, espadas.
+FFFFFF Recursos: Transformações poderosas melhoram
+FFFFFF ataque, defesa, acerto crítico, absorção até o 
+FFFFFF aumento do alcance dos ataques.
+FFFFFF Distribuição de pontos: Força, destreza e constituição.
